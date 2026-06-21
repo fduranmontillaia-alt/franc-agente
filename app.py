@@ -25,7 +25,7 @@ def consultar_groq(prompt_usuario):
         
         # Consultamos al modelo rápido Llama 3
         completion = client.chat.completions.create(
-            model="llama3-8b-8192",
+            model="llama-3.1-8b-instant", 
             messages=[
                 {"role": "system", "content": "Eres Franc, un agente de ventas amable y conciso. Responde corto."},
                 {"role": "user", "content": prompt_usuario}
