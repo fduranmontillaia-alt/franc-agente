@@ -8,15 +8,7 @@ import os
 st.title("Franc - Agente de Ventas por Voz")
 st.write("Bienvenido al sistema de inventario en la nube de Franc.")
 
-# TRUCO: Creamos la memoria para limpiar la barra de texto
-if "texto_pregunta" not in st.session_state:
-    st.session_state["texto_pregunta"] = ""
-
-# Función para el botón de Reset: pone la memoria en blanco
-def limpiar_texto():
-    st.session_state["texto_pregunta"] = ""
-
-# 1. Conexión segura a la Base de Datos de Neon
+# 1. Conexión segura a la Base de Datos de Neon (Usa los Secretos de Streamlit)
 def conectar_db():
     try:
         conn = psycopg2.connect(st.secrets["DATABASE_URL"])
@@ -28,10 +20,12 @@ def conectar_db():
 # 2. Conexión segura al Cerebro (Groq Cloud)
 def consultar_groq(prompt_usuario):
     try:
+        # Lee la API Key de forma segura desde los secretos
         client = Groq(api_key=st.secrets["GROQ_API_KEY"])
         
+        # Consultamos al modelo rápido Llama 3
         completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="llama-3.1-8b-instant", 
             messages=[
                 {"role": "system", "content": "Eres Franc, un agente de ventas amable y conciso. Responde corto."},
                 {"role": "user", "content": prompt_usuario}
@@ -41,20 +35,15 @@ def consultar_groq(prompt_usuario):
     except Exception as e:
         return f"Error en el cerebro de IA: {e}"
 
-# Interfaz en la pantalla vinculada a la memoria
-pregunta = st.text_input(
-    "Escribe tu pregunta para Franc (ej: ¿Qué pantalones tienes?):", 
-    key="texto_pregunta"
-)
-
-# Creamos el botón "Reset" justo debajo de la barra
-st.button("Reset (Nueva consulta)", on_click=limpiar_texto)
+# Interfaz en la pantalla
+pregunta = st.text_input("Escribe tu pregunta para Franc (ej: ¿Qué pantalones tienes?):")
 
 if pregunta:
     # Buscar en la base de datos cloud
     conn = conectar_db()
     if conn:
         cursor = conn.cursor()
+        # Hacemos una prueba rápida trayendo 3 prendas para verificar que funciona
         cursor.execute("SELECT prenda, precio FROM public.inventario_prendas LIMIT 3;")
         prendas = cursor.fetchall()
         cursor.close()
@@ -62,6 +51,7 @@ if pregunta:
         
         texto_prendas = ", ".join([f"{p[0]} a {p[1]} pesos" for p in prendas])
         
+        # Mandamos la información al LLM de Groq
         contexto_completo = f"El usuario pregunta: '{pregunta}'. En el inventario cloud hay: {texto_prendas}. Responde al usuario."
         respuesta_ia = consultar_groq(contexto_completo)
         
@@ -73,5 +63,5 @@ if pregunta:
         tts = gTTS(text=respuesta_ia, lang='es', tld='com.mx')
         tts.save("respuesta.mp3")
         
-        # Reproductor de audio con Autoplay Automático
+        # Reproductor de audio en la página web
         st.audio("respuesta.mp3", format="audio/mp3", autoplay=True)
