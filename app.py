@@ -64,4 +64,4 @@ if pregunta:
         tts.save("respuesta.mp3")
         
         # Reproductor de audio en la página web
-        st.audio("respuesta.mp3", format="audio/mp3")
+        st.audio("respuesta.mp3", format="audio/mp3", autoplay=True)
