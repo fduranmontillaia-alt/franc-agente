@@ -86,7 +86,7 @@ col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
     st.markdown("### Desarrollado por: **Francisco Duran**")
-    st.write("¿Quieres un sistema automático como este para tu negocio? ¡Contáctame!")
+    st.write("¿Quieres contartar al creador? ¡Contáctame!")
     
     # Enlace directo y limpio a tu WhatsApp
     url_whatsapp = "https://wa.me/584168184675"
