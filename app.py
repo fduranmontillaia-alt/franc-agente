@@ -77,26 +77,23 @@ if pregunta:
         st.audio("respuesta.mp3", format="audio/mp3", autoplay=True)
 
 # ------------------------------------------------------------------
-# SECCIÓN DE CONTACTO (PIE DE PÁGINA)
+# SECCIÓN DE CONTACTO (CORREGIDA)
 # ------------------------------------------------------------------
 st.markdown("---") # Línea divisoria elegante
 
-# Usamos HTML para que el enlace abra directamente la aplicación de WhatsApp
+# Definimos las variables fijas arriba para evitar errores de sintaxis en el HTML
+nombre_usuario = "Francisco Duran"
 url_whatsapp = "https://wa.me/584168184675"
 
-# ------------------------------------------------------------------
-# SECCIÓN DE CONTACTO (PIE DE PÁGINA)
-# ------------------------------------------------------------------
-st.markdown("---")  # Línea divisoria elegante
-
-# Enlace directo que abre tu WhatsApp
-url_whatsapp = "https://wa.me/584168184675"
-
-# Mostramos tus datos de contacto con un botón limpio
-st.subheader("Desarrollado por: Francisco Duran")
-st.write("¿Quieres un sistema como este para tu negocio? ¡Contáctame!")
-
-# Creamos el botón verde que te redirige a tu WhatsApp directamente
-st.link_button("💬 Contactar por WhatsApp", url_whatsapp),
+st.markdown(
+    f"""
+    <div style="text-align: center; padding: 20px; background-color: #f0f2f6; border-radius: 10px; margin-top: 30px;">
+        <h4 style="margin: 0; color: #31333F; font-family: sans-serif;">Desarrollado por: {nombre_usuario}</h4>
+        <p style="margin: 10px 0 15px 0; color: #555; font-family: sans-serif;">¿Quieres un sistema como este para tu negocio? ¡Contáctame!</p>
+        <a href="{url_whatsapp}" target="_blank" style="background-color: #25D366; color: white; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block; font-family: sans-serif;">
+            💬 Contactar por WhatsApp
+        </a>
+    </div>
+    """,
     unsafe_html=True
 )
