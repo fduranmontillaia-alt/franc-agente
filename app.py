@@ -84,15 +84,19 @@ st.markdown("---") # Línea divisoria elegante
 # Usamos HTML para que el enlace abra directamente la aplicación de WhatsApp
 url_whatsapp = "https://wa.me/584168184675"
 
-st.markdown(
-    f"""
-    <div style="text-align: center; padding: 10px; background-color: #f0f2f6; border-radius: 10px;">
-        <h4 style="margin: 0; color: #31333F;">Desarrollado por: {st.secrets.get("USER_NAME", "Francisco Duran")}</h4>
-        <p style="margin: 5px 0 10px 0; color: #555;">¿Quieres un sistema como este para tu negocio? ¡Contáctame!</p>
-        <a href="{url_whatsapp}" target="_blank" style="background-color: #25D366; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;">
-            💬 Contactar por WhatsApp
-        </a>
-    </div>
-    """,
+# ------------------------------------------------------------------
+# SECCIÓN DE CONTACTO (PIE DE PÁGINA)
+# ------------------------------------------------------------------
+st.markdown("---")  # Línea divisoria elegante
+
+# Enlace directo que abre tu WhatsApp
+url_whatsapp = "https://wa.me/584168184675"
+
+# Mostramos tus datos de contacto con un botón limpio
+st.subheader("Desarrollado por: Francisco Duran")
+st.write("¿Quieres un sistema como este para tu negocio? ¡Contáctame!")
+
+# Creamos el botón verde que te redirige a tu WhatsApp directamente
+st.link_button("💬 Contactar por WhatsApp", url_whatsapp),
     unsafe_html=True
 )
