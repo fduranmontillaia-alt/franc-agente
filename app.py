@@ -77,23 +77,17 @@ if pregunta:
         st.audio("respuesta.mp3", format="audio/mp3", autoplay=True)
 
 # ------------------------------------------------------------------
-# SECCIÓN DE CONTACTO (CORREGIDA)
+# SECCIÓN DE CONTACTO (PIE DE PÁGINA TOTALMENTE CORREGIDA)
 # ------------------------------------------------------------------
 st.markdown("---") # Línea divisoria elegante
 
-# Definimos las variables fijas arriba para evitar errores de sintaxis en el HTML
-nombre_usuario = "Francisco Duran"
-url_whatsapp = "https://wa.me/584168184675"
+# Creamos columnas limpias nativas de Streamlit para evitar usar CSS conflictivo
+col1, col2, col3 = st.columns([1, 2, 1])
 
-st.markdown(
-    f"""
-    <div style="text-align: center; padding: 20px; background-color: #f0f2f6; border-radius: 10px; margin-top: 30px;">
-        <h4 style="margin: 0; color: #31333F; font-family: sans-serif;">Desarrollado por: {nombre_usuario}</h4>
-        <p style="margin: 10px 0 15px 0; color: #555; font-family: sans-serif;">¿Quieres un sistema como este para tu negocio? ¡Contáctame!</p>
-        <a href="{url_whatsapp}" target="_blank" style="background-color: #25D366; color: white; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block; font-family: sans-serif;">
-            💬 Contactar por WhatsApp
-        </a>
-    </div>
-    """,
-    unsafe_html=True
-)
+with col2:
+    st.markdown("### Desarrollado por: **Francisco Duran**")
+    st.write("¿Quieres un sistema automático como este para tu negocio? ¡Contáctame!")
+    
+    # Enlace directo y limpio a tu WhatsApp
+    url_whatsapp = "https://wa.me/584168184675"
+    st.link_button("💬 Contactar por WhatsApp", url_whatsapp, type="primary")
